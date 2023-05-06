@@ -252,6 +252,29 @@ paths:
         description: A unique integer value identifying this Заявка.
         required: true
         type: integer
+  /requests/{id}/delete/:
+    post:
+      operationId: requests_delete
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Requests'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/Requests'
+      tags:
+        - requests
+    parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this Заявка.
+        required: true
+        type: integer
   /users/:
     get:
       operationId: users_list
