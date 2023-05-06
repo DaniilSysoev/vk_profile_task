@@ -58,16 +58,22 @@ class UserViewSet(viewsets.ModelViewSet):
         data = request.data
         password = data.get('password', None)
         username = data.get('username', None)
+        #проверка на существование пользователя
+        if not self.get_queryset().filter(username=username, password=password).exists():
+            return Response({'error': 'Ошибка данных'}, status=400)
         user = self.get_queryset().get(username=username, password=password)
         if user:
             token = Token.objects.get(user=user)
             return Response({'token': token.key}, status=200)
-        return Response({'error': 'Wrong Credentials'}, status=400)
+        return Response({'error': 'Ошибка данных'}, status=400)
     
     #отправить заявку в друзья
     @action(methods=['post'], detail=True, url_path='add_friend')
     def add_friend(self, request, pk=None, *args, **kwargs):
         data = request.data
+        #проверить авторизацию
+        if not request.user.is_authenticated:
+            return Response({'error': 'Вы не авторизованы'}, status=400)
         data['sender_id'] = request.user.id
         data['receiver_id'] = pk
         serializer = RequestsSerializer(data=data)
@@ -147,6 +153,9 @@ class RequestsViewSet(viewsets.ModelViewSet):
     @action(methods=['post'], detail=True, url_path='accept')
     def accept(self, request, pk=None, *args, **kwargs):
         queryset = self.get_queryset()
+        #проверить что существует такая заявка
+        if not queryset.filter(id=pk).exists():
+            return Response({'error': 'Такой заявки не существует'}, status=400)
         instance = queryset.get(id=pk)
         if instance.receiver_id == request.user:
             user1 = FriendsList.objects.get(user=instance.sender_id)
@@ -163,6 +172,9 @@ class RequestsViewSet(viewsets.ModelViewSet):
     @action(methods=['post'], detail=True, url_path='delete')
     def delete(self, request, pk=None, *args, **kwargs):
         queryset = self.get_queryset()
+        #проверить что существует такая заявка
+        if not queryset.filter(id=pk).exists():
+            return Response({'error': 'Такой заявки не существует'}, status=400)
         instance = queryset.get(id=pk)
         if instance.sender_id == request.user or instance.receiver_id == request.user:
             instance.delete()
