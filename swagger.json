@@ -1,0 +1,442 @@
+swagger: '2.0'
+info:
+  title: Vk Profile Task API
+  description: Test description
+  license:
+    name: BSD License
+  version: v1
+host: localhost:8000
+schemes:
+  - http
+basePath: /api/v1
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  Basic:
+    type: basic
+security:
+  - Basic: []
+paths:
+  /friends/:
+    get:
+      operationId: friends_list
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Friend'
+      tags:
+        - friends
+    post:
+      operationId: friends_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Friend'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/Friend'
+      tags:
+        - friends
+    parameters: []
+  /friends/{id}/:
+    get:
+      operationId: friends_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Friend'
+      tags:
+        - friends
+    put:
+      operationId: friends_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Friend'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Friend'
+      tags:
+        - friends
+    patch:
+      operationId: friends_partial_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Friend'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Friend'
+      tags:
+        - friends
+    delete:
+      operationId: friends_delete
+      description: ''
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+        - friends
+    parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this Список друзей.
+        required: true
+        type: integer
+  /requests/:
+    get:
+      operationId: requests_list
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Requests'
+      tags:
+        - requests
+    post:
+      operationId: requests_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Requests'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/Requests'
+      tags:
+        - requests
+    parameters: []
+  /requests/received/:
+    get:
+      operationId: requests_received
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Requests'
+      tags:
+        - requests
+    parameters: []
+  /requests/sended/:
+    get:
+      operationId: requests_sended
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Requests'
+      tags:
+        - requests
+    parameters: []
+  /requests/{id}/:
+    get:
+      operationId: requests_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Requests'
+      tags:
+        - requests
+    put:
+      operationId: requests_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Requests'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Requests'
+      tags:
+        - requests
+    patch:
+      operationId: requests_partial_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Requests'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Requests'
+      tags:
+        - requests
+    delete:
+      operationId: requests_delete
+      description: ''
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+        - requests
+    parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this Заявка.
+        required: true
+        type: integer
+  /requests/{id}/accept/:
+    post:
+      operationId: requests_accept
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Requests'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/Requests'
+      tags:
+        - requests
+    parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this Заявка.
+        required: true
+        type: integer
+  /users/:
+    get:
+      operationId: users_list
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+      tags:
+        - users
+    post:
+      operationId: users_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/User'
+      tags:
+        - users
+    parameters: []
+  /users/login/:
+    post:
+      operationId: users_login
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/User'
+      tags:
+        - users
+    parameters: []
+  /users/{id}/:
+    get:
+      operationId: users_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/User'
+      tags:
+        - users
+    put:
+      operationId: users_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/User'
+      tags:
+        - users
+    patch:
+      operationId: users_partial_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/User'
+      tags:
+        - users
+    delete:
+      operationId: users_delete
+      description: ''
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+        - users
+    parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this пользователь.
+        required: true
+        type: integer
+  /users/{id}/add_friend/:
+    post:
+      operationId: users_add_friend
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/User'
+      tags:
+        - users
+    parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this пользователь.
+        required: true
+        type: integer
+definitions:
+  Friend:
+    required:
+      - user
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      user:
+        title: User
+        type: integer
+      friends:
+        type: array
+        items:
+          type: integer
+        uniqueItems: true
+  Requests:
+    required:
+      - sender_id
+      - receiver_id
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      sender_id:
+        title: Sender id
+        type: integer
+      receiver_id:
+        title: Receiver id
+        type: integer
+  User:
+    required:
+      - username
+      - password
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      username:
+        title: Имя пользователя
+        description: Обязательное поле. Не более 150 символов. Только буквы, цифры
+          и символы @/./+/-/_.
+        type: string
+        pattern: ^[\w.@+-]+$
+        maxLength: 150
+        minLength: 1
+      password:
+        title: Пароль
+        type: string
+        maxLength: 128
+        minLength: 1
