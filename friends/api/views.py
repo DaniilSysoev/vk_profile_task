@@ -126,15 +126,6 @@ class RequestsViewSet(viewsets.ModelViewSet):
             serializer.save()
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
-    
-    #удалить\отклонить заявку
-    def destroy(self, request, pk=None, *args, **kwargs):
-        queryset = self.get_queryset()
-        instance = queryset.get(id=pk)
-        if instance.sender_id == request.user or instance.receiver_id == request.user:
-            instance.delete()
-            return Response({'message': 'Заявка удалена'}, status=204)
-        return Response({'error': 'Вы не можете удалить эту заявку'}, status=400)
 
     #посмотреть исходящие заявки
     @action(methods=['get'], detail=False)
@@ -167,6 +158,16 @@ class RequestsViewSet(viewsets.ModelViewSet):
             instance.delete()
             return Response({'message': 'Заявка принята'}, status=201)
         return Response({'error': 'Вы не можете принять эту заявку'}, status=400)
+    
+    #удалить\отклонить заявку
+    @action(methods=['post'], detail=True, url_path='delete')
+    def delete(self, request, pk=None, *args, **kwargs):
+        queryset = self.get_queryset()
+        instance = queryset.get(id=pk)
+        if instance.sender_id == request.user or instance.receiver_id == request.user:
+            instance.delete()
+            return Response({'message': 'Заявка удалена'}, status=204)
+        return Response({'error': 'Вы не можете удалить эту заявку'}, status=400)
     
     #доступ к list только у юзеров с is_staff=True
     def list(self, request, *args, **kwargs):
@@ -209,3 +210,7 @@ class FriendsListViewSet(viewsets.ModelViewSet):
                 user.save()
             return Response({'message': 'Друг удалён'}, status=204)
         return Response({'error': 'Такого друга нет'}, status=400)
+    
+    #нет доступа к retrieve
+    def retrieve(self, request, pk=None, *args, **kwargs):
+        return Response({'error': 'Нет доступа к этому разделу'}, status=400)
