@@ -44,9 +44,9 @@ class UserViewSet(viewsets.ModelViewSet):
         status = {"Пользователь": serializer.data, "Статус": "Ничего нет"}
         if FriendsList.objects.get(user=instance).friends.filter(id=request.user.id).exists():
             status['Статус'] = 'Вы уже друзья'
-        elif Requests.objects.filter(sender_id=instance, receiver_id=request.user.id).exists():
-            status['Статус'] = 'Вы отправили заявку'
         elif Requests.objects.filter(sender_id=request.user.id, receiver_id=instance).exists():
+            status['Статус'] = 'Вы отправили заявку'
+        elif Requests.objects.filter(sender_id=instance, receiver_id=request.user.id).exists():
             status['Статус'] = 'Вам отправили заявку'
         elif instance.id == request.user.id:
             status['Статус'] = 'Это вы'
